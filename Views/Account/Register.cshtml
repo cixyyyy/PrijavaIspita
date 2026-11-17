@@ -1,0 +1,79 @@
+﻿@model PrijavaIspita.Models.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="card shadow-sm p-4" style="width: 500px; border-radius: 10px;">
+        <h3 class="text-center mb-4" style="color: var(--primary-color);">Novi student</h3>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <form asp-action="Register" method="post">
+            <div class="form-group position-relative mb-3">
+                <i class="fas fa-user input-icon"></i>
+                <input asp-for="Ime" class="form-control form-with-icon" placeholder="Ime" />
+                <span asp-validation-for="Ime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group position-relative mb-3">
+                <i class="fas fa-user input-icon"></i>
+                <input asp-for="Prezime" class="form-control form-with-icon" placeholder="Prezime" />
+                <span asp-validation-for="Prezime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group position-relative mb-3">
+                <i class="fas fa-envelope input-icon"></i>
+                <input asp-for="Email" class="form-control form-with-icon" placeholder="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group position-relative mb-3">
+                <i class="fas fa-lock input-icon"></i>
+                <input asp-for="Password" type="password" class="form-control form-with-icon" placeholder="Lozinka" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group position-relative mb-3">
+                <i class="fas fa-lock input-icon"></i>
+                <input asp-for="ConfirmPassword" type="password" class="form-control form-with-icon" placeholder="Potvrdi lozinku" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="SmerId">Smer</label>
+                <select asp-for="SmerId" asp-items="@(new SelectList(ViewBag.Smerovi, "SmerId", "Naziv"))" class="form-control"></select>
+                <span asp-validation-for="SmerId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="DatumRodjenja"></label>
+                <input asp-for="DatumRodjenja" type="date" class="form-control" />
+                <span asp-validation-for="DatumRodjenja" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="GodinaUpisa"></label>
+                <input asp-for="GodinaUpisa" type="number" class="form-control" />
+                <span asp-validation-for="GodinaUpisa" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 btn-hover">Registracija</button>
+
+            <div class="text-center mt-3">
+                <small>
+                    Već imate nalog?
+                    <a asp-controller="Account" asp-action="Login" style="color: var(--primary-color); text-decoration: underline;">
+                        Ulogujte se
+                    </a>
+                </small>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PrijavaIspita.Models.ZahtevBudzet>
+@{
+    ViewData["Title"] = "Budžeti studenata";
+}
+
+<h2 class="mb-4 text-center">Budžeti studenata</h2>
+
+<form method="get" asp-action="Zahtevi" class="mb-3 text-center">
+    <label for="filter" class="form-label me-2">Filtriraj po statusu:</label>
+    <select id="filter" name="filter" class="form-select d-inline-block w-auto" onchange="this.form.submit()">
+
+        @if (ViewBag.Filter == null) { ViewBag.Filter = "svi"; }
+        <option value="svi" selected="@(ViewBag.Filter == "svi")">Svi</option>
+        <option value="na čekanju" selected="@(ViewBag.Filter == "na čekanju")">Na čekanju</option>
+        <option value="odobren" selected="@(ViewBag.Filter == "odobren")">Odobren</option>
+        <option value="odbijen" selected="@(ViewBag.Filter == "odbijen")">Odbijen</option>
+    </select>
+</form>
+
+<div class="table-responsive shadow-sm rounded">
+    <table class="table table-hover table-striped text-center mb-0">
+        <thead class="table-danger">
+            <tr>
+                <th>Student</th>
+                <th>Zatraženi iznos</th>
+                <th>Status</th>
+                <th>Datum</th>
+                <th>Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Korisnik.Ime @item.Korisnik.Prezime</td>
+                    <td>@item.Kolicina.ToString("0.00") RSD</td>
+                    <td>@item.Status</td>
+                    <td>@item.Datum.ToShortDateString()</td>
+                    <td>
+                        @if (item.Status.ToLower().Contains("na čekanju"))
+                        {
+                            <a asp-controller="Budzet" asp-action="Odobri" asp-route-id="@item.ZahtevBudzetId" class="btn btn-sm btn-success">Odobri</a>
+                            <a asp-controller="Budzet" asp-action="Odbij" asp-route-id="@item.ZahtevBudzetId" class="btn btn-sm btn-warning">Odbij</a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

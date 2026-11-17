@@ -1,0 +1,43 @@
+﻿@model PrijavaIspita.Models.Predmet
+
+@{
+    ViewData["Title"] = "Detalji predmeta";
+}
+
+<h2 class="mb-4">Detalji predmeta</h2>
+
+@if (Model == null)
+{
+    <div class="alert alert-danger">
+        Predmet nije pronađen.
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Naziv predmeta</th>
+            <td>@Model.Naziv</td>
+        </tr>
+        <tr>
+            <th>Profesor</th>
+            <td>@(Model.Profesor != null ? Model.Profesor.Ime + " " + Model.Profesor.Prezime : "Nije dodeljen")</td>
+        </tr>
+        <tr>
+            <th>Smer</th>
+            <td>@Model.Smer.Naziv</td>
+        </tr>
+        <tr>
+            <th>ESPB</th>
+            <td>@(Model.ESPB.HasValue ? Model.ESPB.Value.ToString() : "-")</td>
+        </tr>
+        <tr>
+            <th>Opis predmeta</th>
+            <td>
+                @Html.Raw(Model.Opis?.Replace("\n", "<br />"))
+            </td>
+        </tr>
+    </table>
+
+    <a asp-controller="PredmetStudent" asp-action="Index" class="btn btn-secondary">Nazad na listu predmeta</a>
+}

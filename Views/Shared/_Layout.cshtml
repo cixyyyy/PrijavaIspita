@@ -1,0 +1,130 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PrijavaIspita</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <!-- Bootstrap i fontawesome ikonice -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: var(--primary-color); box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <img src="~/img/logo.png" alt="Logo" style="height:40px;">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    @{
+                        var role = HttpContextAccessor.HttpContext.Session.GetString("Role");
+                    }
+
+                    <!-- LEFT MENU -->
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link text-white" asp-controller="Home" asp-action="Index">Home</a></li>
+
+                        @if (role == "Administrator")
+                        {
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="Predmet" asp-action="Index">Predmeti</a></li>
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="Budzet" asp-action="Zahtevi">Zahtevi za budžet</a></li>
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="AdminPregled" asp-action="Index">Prijave i transakcije</a></li>
+                        }
+                        else if (role == "Student")
+                        {
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="PrijavaIspita" asp-action="Index">Prijava Ispita</a></li>
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="Obavestenja" asp-action="Index">Obaveštenja</a></li>
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="PredmetStudent" asp-action="Index">Predmeti</a></li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="kalendarDropdown" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">Kalendar</a>
+                                    <ul class="dropdown-menu" aria-labelledby="kalendarDropdown">
+                                        <li>
+                                            <a class="dropdown-item" asp-controller="Kalendar" asp-action="Index">
+                                                Kalendar nastave
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" asp-controller="IspitTermin" asp-action="Index">
+                                                Kalendar ispita
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-white" href="#" id="dokumentacijaDropdown" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">Dokumentacija</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="Dokumentacija" asp-action="Cenovnik">Cenovnik</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Dokumentacija" asp-action="Uputstva">Uputstva</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Dokumentacija" asp-action="Pravila">Pravila za upis</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="Kontakt" asp-action="Index">Kontakt</a></li>
+                        }
+                        else if (role == "Profesor")
+                        {
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="Profesor" asp-action="PregledPrijava">Pregled prijava</a></li>
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="ProfesorOcene" asp-action="Index">Unos ocena</a></li>
+                                <li class="nav-item"><a class="nav-link text-white"asp-controller="IspitTermin"asp-action="Zakazi">Zakaži ispit</a></li>
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="Kalendar" asp-action="Index">Kalendar nastave</a></li>
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="Dokumentacija" asp-action="Profesor">Dokumentacija</a></li>
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="Kontakt" asp-action="Index">Kontakt</a></li>
+                        }
+                    </ul>
+
+                    <!-- RIGHT MENU -->
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        @if (!string.IsNullOrEmpty(role))
+                        {
+                                <li class="nav-item"><span class="nav-link text-white">Ulogovan kao: @HttpContextAccessor.HttpContext.Session.GetString("Email")</span></li>
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                        }
+                        else
+                        {
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="Account" asp-action="Login">Login</a></li>
+                                <li class="nav-item"><a class="nav-link text-white" asp-controller="Account" asp-action="Register">Register</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container fade-in mt-4 flex-grow-1">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+   <footer class="footer mt-auto">
+    <div class="container d-flex justify-content-center align-items-center">
+        <span>Copyright &copy; 2026 - Aleksandar Ćirković 511/21</span>
+    </div>
+</footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

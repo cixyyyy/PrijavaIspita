@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Admin Pregled";
+}
+
+<h2 class="mb-4 text-center">Admin Pregled</h2>
+
+<div class="row justify-content-center g-4">
+    <div class="col-md-4">
+        <a asp-action="PrijaveAdmin" class="text-decoration-none">
+            <div class="card hover-card text-center p-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Pregled prijava</h5>
+                    <p class="card-text">Pogledajte sve prijave studenata.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-4">
+        <a asp-action="TransakcijeAdmin" class="text-decoration-none">
+            <div class="card hover-card text-center p-4 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Pregled transakcija</h5>
+                    <p class="card-text">Pregledajte sve finansijske transakcije.</p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

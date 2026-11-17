@@ -1,0 +1,51 @@
+﻿@model List<PrijavaIspita.Models.Predmet>
+
+@{
+    ViewData["Title"] = "Moji predmeti";
+}
+
+<h2 class="mb-4">Moji predmeti</h2>
+
+<div class="mb-3">
+    <a asp-action="Index" asp-route-filter="svi" class="btn @(ViewBag.Filter == "svi" ? "btn-primary" : "btn-secondary")">Svi</a>
+    <a asp-action="Index" asp-route-filter="polozeni" class="btn @(ViewBag.Filter == "polozeni" ? "btn-success" : "btn-secondary")">Položeni</a>
+    <a asp-action="Index" asp-route-filter="nepolozeni" class="btn @(ViewBag.Filter == "nepolozeni" ? "btn-danger" : "btn-secondary")">Nepoloženi</a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Trenutno nema predmeta za vaš smer.
+    </div>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>Naziv predmeta</th>
+                <th>Profesor</th>
+                <th>Smer</th>
+                <th>Akcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.Naziv</td>
+                    <td>@p.Profesor.Ime @p.Profesor.Prezime</td>
+                    <td>@p.Smer.Naziv</td>
+                    <td>
+                        <a asp-controller="PredmetDetalji"
+                           asp-action="Detaljnije"
+                           asp-route-id="@p.PredmetId"
+                           class="btn btn-sm btn-primary">
+                            Detaljnije
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

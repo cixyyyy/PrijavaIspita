@@ -1,0 +1,27 @@
+﻿@model PrijavaIspita.Models.Prijava
+
+@{
+    ViewData["Title"] = "Unos ocene";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<div class="card p-4 mb-4">
+    <h4>Student: @Model.Korisnik.Ime @Model.Korisnik.Prezime</h4>
+    <h4>Predmet: @Model.Predmet.Naziv</h4>
+    <h5>Rok: @Model.Rok</h5>
+
+    <form asp-action="UnosOcene" method="post">
+        <input type="hidden" name="predmetId" value="@Model.PredmetId" />
+        <input type="hidden" name="korisnikId" value="@Model.KorisnikID" />
+        <input type="hidden" name="rok" value="@Model.Rok" />
+
+        <div class="mb-3">
+            <label for="ocena" class="form-label">Ocena:</label>
+            <input type="number" class="form-control" id="ocena" name="ocena" min="5" max="10" value="@Model.Ocena" required />
+        </div>
+
+        <button type="submit" class="btn btn-success">Sačuvaj ocenu</button>
+        <a asp-action="Index" class="btn btn-secondary">Nazad</a>
+    </form>
+</div>

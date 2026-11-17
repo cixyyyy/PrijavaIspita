@@ -1,0 +1,45 @@
+﻿<h2>Zakazivanje ispita</h2>
+
+@if (TempData["Greska"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Greska"]
+    </div>
+}
+
+@if (TempData["Uspesno"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Uspesno"]
+    </div>
+}
+
+<form method="post">
+    <div class="mb-3">
+        <label>Predmet</label>
+        <select name="predmetId" class="form-control">
+            @foreach (var p in ViewBag.Predmeti)
+            {
+                <option value="@p.PredmetId">@p.Naziv</option>
+            }
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Rok</label>
+        <select name="rok" class="form-control">
+            <option>Januarski</option>
+            <option>Junski</option>
+            <option>Julski</option>
+            <option>Septembarski</option>
+            <option>Oktobarski</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label>Datum</label>
+        <input type="date" name="datum" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Sačuvaj</button>
+</form>

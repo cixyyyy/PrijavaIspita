@@ -1,0 +1,161 @@
+﻿@{
+    ViewData["Title"] = "Početna";
+    var role = Context.Session.GetString("Role");
+}
+
+<div class="home-hero text-center py-5 fade-in">
+    @if (string.IsNullOrEmpty(role))
+    {
+        <h1 class="display-4 mb-3">Dobrodošli na Akademski Portal</h1>
+        <p class="lead mb-4">
+            Centralizovani sistem za prijavu ispita, evidenciju ocena i akademsku administraciju.
+            Prijavite se kako biste pristupili funkcionalnostima sistema.
+        </p>
+
+        <a class="btn btn-primary btn-lg" asp-controller="Account" asp-action="Login">Prijavi se</a>
+        <a class="btn btn-outline-primary btn-lg ms-2" asp-controller="Account" asp-action="Register">Registruj se</a>
+    }
+    else if (role == "Student")
+    {
+        <h1 class="display-4 mb-3">Dobrodošli na studentski portal</h1>
+        <p class="lead">
+            Portal vam omogućava prijavu ispita, praćenje ocena i pregled važnih obaveštenja.
+        </p>
+    }
+    else if (role == "Profesor")
+    {
+        <h1 class="display-4 mb-3">Dobrodošli na portal za profesore</h1>
+        <p class="lead">
+            Upravljajte ispitnim rokovima, unosite ocene i pratite prijavljene studente.
+        </p>
+    }
+    else if (role == "Administrator")
+    {
+        <h1 class="display-4 mb-3">Dobrodošli na admin portal</h1>
+        <p class="lead">
+            Administrativni pristup omogućava upravljanje predmetima, studentskim zahtevima, pregled prijava i transakcija.
+        </p>
+    }
+</div>
+
+
+<div class="container mt-5">
+    <div class="row text-center">
+
+        @if (string.IsNullOrEmpty(role))
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title">O sistemu</h5>
+                        <p class="card-text">
+                            Portal omogućava digitalnu prijavu ispita i efikasnu komunikaciju između studenata i profesora.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        else if (role == "Student")
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Prijava ispita</h5>
+                        <p class="card-text">
+                            Jednostavno prijavite ispite za aktuelni rok i pratite status prijave.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Pregled ocena</h5>
+                        <p class="card-text">
+                            Pratite ostvarene rezultate i istoriju položenih ispita.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        else if (role == "Profesor")
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Unos ocena</h5>
+                        <p class="card-text">
+                            Unesite i ažurirajte ocene za prijavljene studente.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Spisak prijavljenih</h5>
+                        <p class="card-text">
+                            Pregledajte studente koji su prijavili vaš predmet.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+        else if (role == "Administrator")
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Upravljanje korisnicima</h5>
+                        <p class="card-text">
+                            Dodavanje, izmena i brisanje naloga studenata i profesora.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Sistemska podešavanja</h5>
+                        <p class="card-text">
+                            Upravljanje rokovima, predmetima i globalnim parametrima sistema.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+<!-- Bootstrap CAROUSEL -->
+<div id="portalCarousel" class="carousel slide mt-5" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-inner">
+
+        <div class="carousel-item active">
+            <div class="carousel-wrapper">
+                <img src="~/img/banner1.png" class="carousel-img">
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="carousel-wrapper">
+                <img src="~/img/banner2.png" class="carousel-img">
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="carousel-wrapper">
+                <img src="~/img/banner3.png" class="carousel-img">
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,61 @@
+﻿@model List<PrijavaIspita.Models.IspitTermin>
+
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<h1>Kalendar ispita</h1>
+
+<div id="calendar"></div>
+
+<div id="detalji" class="mt-3"></div>
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+
+            var events = @Html.Raw(Json.Serialize(Model.Select(e => new
+            {
+                title = e.Predmet.Naziv,
+                start = e.Datum.ToString("yyyy-MM-dd"),
+                predmet = e.Predmet.Naziv,
+                rok = e.Rok
+            })));
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                locale: 'sr',
+
+                events: events,
+
+                eventContent: function (arg) {
+                    let predmet = document.createElement('div');
+                    predmet.innerHTML = "<b>" + arg.event.extendedProps.predmet + "</b>";
+
+                    let rok = document.createElement('div');
+                    rok.innerHTML = arg.event.extendedProps.rok + " rok";
+
+                    return { domNodes: [predmet, rok] };
+                },
+
+                eventClick: function (info) {
+                    alert(
+                        "Predmet: " + info.event.extendedProps.predmet +
+                        "\nRok: " + info.event.extendedProps.rok +
+                        "\nDatum: " + info.event.start.toLocaleDateString()
+                    );
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+}

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<PrijavaIspita.Models.Prijava>
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewData["Title"] = "Unos ocena";
+}
+
+<h2>Unos ocena</h2>
+
+@if (TempData["Uspesno"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Uspesno"]
+    </div>
+}
+
+@if (TempData["Greska"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Greska"]
+    </div>
+}
+
+
+<form method="get" class="row g-3 mb-3">
+    <div class="col-md-4">
+        <label for="predmetFilter" class="form-label">Filtriraj po predmetu:</label>
+        <select class="form-select" id="predmetFilter" name="predmetId" asp-items="ViewBag.PredmetiProfesora" onchange="this.form.submit()">
+            <option value="">Svi predmeti</option>
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <label for="statusFilter" class="form-label">Filtriraj po statusu ocene:</label>
+        <select class="form-select" id="statusFilter" name="statusOcene" asp-items="ViewBag.StatusOcene" onchange="this.form.submit()">
+        </select>
+    </div>
+</form>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Student</th>
+            <th>Predmet</th>
+            <th>Rok</th>
+            <th>Ocena</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var prijava in Model)
+        {
+            <tr>
+                <td>@prijava.Korisnik.Ime @prijava.Korisnik.Prezime</td>
+                <td>@prijava.Predmet.Naziv</td>
+                <td>@prijava.Rok</td>
+                <td>@prijava.Ocena</td>
+                <td>
+                    <a asp-action="UnosOcene" asp-route-predmetId="@prijava.PredmetId"
+                       asp-route-korisnikId="@prijava.KorisnikID" asp-route-rok="@prijava.Rok" class="btn btn-primary btn-sm">
+                        Unesi/Izmeni ocenu
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
